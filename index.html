@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Star Express Rider Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-slate-100">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="min-h-screen flex items-center justify-center">
+
+<div class="bg-white w-96 p-8 rounded-3xl shadow-xl text-center">
+
+<img src="logo.png"
+class="w-24 mx-auto mb-5">
+
+<h1 class="text-xl font-bold">
+Super Star Express Delivery Service LLC
+</h1>
+
+<p class="text-gray-500 text-sm mt-2">
+Rider Performance Dashboard
+</p>
+
+<input id="pin"
+type="password"
+maxlength="4"
+placeholder="Enter 4 Digit PIN"
+class="border rounded-xl w-full p-3 mt-6 text-center">
+
+
+<button onclick="login()"
+class="bg-red-600 text-white w-full mt-4 p-3 rounded-xl font-bold">
+Login
+</button>
+
+
+<p class="text-xs text-gray-400 mt-5">
+Yasir Rafiq<br>
+Rider Account Manager
+</p>
+
+</div>
+
+</div>
+
+
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard"
+class="hidden p-5">
+
+
+<!-- HEADER -->
+
+<div class="bg-white rounded-3xl shadow p-5 flex items-center gap-4 mb-6">
+
+<img src="logo.png"
+class="w-20">
+
+
+<div>
+
+<h1 class="text-xl font-bold">
+Super Star Express Delivery Service LLC
+</h1>
+
+<p class="text-red-600 font-semibold">
+Rider Performance Dashboard
+</p>
+
+<p class="text-sm text-gray-500">
+Yasir Rafiq - Rider Account Manager
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- CARDS -->
+
+
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+
+
+<div class="bg-white rounded-2xl p-5 shadow">
+<p>Total Riders</p>
+<h2 id="total"
+class="text-3xl font-bold">
+0
+</h2>
+</div>
+
+
+
+<div class="bg-green-50 rounded-2xl p-5">
+<p>High Performance</p>
+<h2 id="high"
+class="text-3xl font-bold text-green-600">
+0
+</h2>
+</div>
+
+
+
+<div class="bg-blue-50 rounded-2xl p-5">
+<p>Medium Performance</p>
+<h2 id="medium"
+class="text-3xl font-bold text-blue-600">
+0
+</h2>
+</div>
+
+
+
+<div class="bg-yellow-50 rounded-2xl p-5">
+<p>Low Performance</p>
+<h2 id="low"
+class="text-3xl font-bold text-yellow-600">
+0
+</h2>
+</div>
+
+
+
+<div class="bg-red-50 rounded-2xl p-5">
+<p>Very Low</p>
+<h2 id="veryLow"
+class="text-3xl font-bold text-red-600">
+0
+</h2>
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
+
+
+<div class="bg-white p-5 rounded-2xl shadow">
+<p>Working Riders</p>
+<h2 id="working"
+class="text-2xl font-bold">
+0
+</h2>
+</div>
+
+
+<div class="bg-white p-5 rounded-2xl shadow">
+<p>Late Login</p>
+<h2 id="late"
+class="text-2xl font-bold">
+0
+</h2>
+</div>
+
+
+<div class="bg-white p-5 rounded-2xl shadow">
+<p>No Show</p>
+<h2 id="noshow"
+class="text-2xl font-bold">
+0
+</h2>
+</div>
+
+
+<div class="bg-white p-5 rounded-2xl shadow">
+<p>Total Deliveries</p>
+<h2 id="orders"
+class="text-2xl font-bold">
+0
+</h2>
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script>
+
+function login(){
+
+let pin =
+document.getElementById("pin").value;
+
+
+if(pin=="4133"){
+
+document.getElementById("loginPage")
+.classList.add("hidden");
+
+
+document.getElementById("dashboard")
+.classList.remove("hidden");
+
+
+}
+else{
+
+alert("Wrong PIN");
+
+}
+
+}
+
+</script>
+<!-- SEARCH & TABLE SECTION -->
+
+<div class="bg-white rounded-3xl shadow mt-8 p-5">
+
+<h2 class="text-xl font-bold mb-4">
+Rider Performance Details
+</h2>
+
+<input id="search"
+onkeyup="searchRider()"
+placeholder="Search Rider Name / ID"
+class="border rounded-xl p-3 w-full mb-4">
+
+
+<div class="overflow-x-auto">
+
+<table class="w-full text-sm">
+
+<thead class="bg-slate-100">
+
+<tr>
+<th class="p-3">Name</th>
+<th class="p-3">Rider ID</th>
+<th class="p-3">Bike No</th>
+<th class="p-3">ITC</th>
+<th class="p-3">Passport</th>
+<th class="p-3">Working Status</th>
+<th class="p-3">Deliveries</th>
+<th class="p-3">Performance</th>
+<th class="p-3">Remarks</th>
+</tr>
+
+</thead>
+
+
+<tbody id="riderTable">
+
+</tbody>
+
+
+</table>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- CHARTS -->
+
+<div class="grid md:grid-cols-3 gap-5 mt-6">
+
+
+<div class="bg-white p-5 rounded-3xl shadow">
+
+<h3 class="font-bold mb-3">
+Performance Chart
+</h3>
+
+<canvas id="performanceChart"></canvas>
+
+</div>
+
+
+
+<div class="bg-white p-5 rounded-3xl shadow">
+
+<h3 class="font-bold mb-3">
+ITC Status
+</h3>
+
+<canvas id="itcChart"></canvas>
+
+</div>
+
+
+
+
+<div class="bg-white p-5 rounded-3xl shadow">
+
+<h3 class="font-bold mb-3">
+Passport Status
+</h3>
+
+<canvas id="passportChart"></canvas>
+
+</div>
+
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+
+let riders=[];
+
+
+
+function searchRider(){
+
+let value =
+document.getElementById("search")
+.value.toLowerCase();
+
+
+let rows =
+document.querySelectorAll("#riderTable tr");
+
+
+rows.forEach(row=>{
+
+row.style.display =
+row.innerText.toLowerCase()
+.includes(value)
+?"":"none";
+
+});
+
+}
+
+
+
+
+
+function getPerformance(order){
+
+if(order>=400)
+return "High";
+
+if(order>=350)
+return "Medium";
+
+if(order>=300)
+return "Low";
+
+return "Very Low";
+
+}
+
+
+
+
+function showCharts(){
+
+
+new Chart(
+document.getElementById("performanceChart"),
+{
+
+type:"doughnut",
+
+data:{
+
+labels:[
+"High",
+"Medium",
+"Low",
+"Very Low"
+],
+
+datasets:[{
+
+data:[
+10,
+20,
+15,
+5
+],
+
+backgroundColor:[
+"green",
+"blue",
+"orange",
+"red"
+]
+
+}]
+
+}
+
+});
+
+
+
+
+
+new Chart(
+document.getElementById("itcChart"),
+{
+
+type:"pie",
+
+data:{
+
+labels:[
+"Available",
+"Missing"
+],
+
+datasets:[{
+
+data:[
+80,
+20
+],
+
+backgroundColor:[
+"green",
+"red"
+]
+
+}]
+
+}
+
+});
+
+
+
+
+
+new Chart(
+document.getElementById("passportChart"),
+{
+
+type:"pie",
+
+data:{
+
+labels:[
+"Available",
+"Missing"
+],
+
+datasets:[{
+
+data:[
+90,
+10
+],
+
+backgroundColor:[
+"blue",
+"red"
+]
+
+}]
+
+}
+
+});
+
+}
+
+
+showCharts();
+
+
+</script>
+<script>
+
+const MASTER_SHEET_URL = 
+"https://docs.google.com/spreadsheets/d/1vTrV_w5Fq51RMKJi7aLnKjgR_-bTkVMwvgR_7sLp7dE/export?format=csv";
+
+
+const PERFORMANCE_SHEET_URL = 
+"https://docs.google.com/spreadsheets/d/1X5B_YFIhHRAlFwLVxIgRJ70C6kSP-d1zxVxM7c6TIc4/export?format=csv";
+
+
+
+let riders = [];
+
+
+
+// LOAD GOOGLE SHEETS
+
+async function loadGoogleSheets(){
+
+
+try{
+
+
+let masterResponse =
+await fetch(MASTER_SHEET_URL);
+
+
+let masterCSV =
+await masterResponse.text();
+
+
+
+let performanceResponse =
+await fetch(PERFORMANCE_SHEET_URL);
+
+
+let performanceCSV =
+await performanceResponse.text();
+
+
+
+let master =
+csvToJson(masterCSV);
+
+
+
+let performance =
+csvToJson(performanceCSV);
+
+
+
+mergeRiders(master,performance);
+
+
+
+}
+
+catch(error){
+
+console.log(error);
+
+alert("Google Sheet Load Error");
+
+}
+
+
+}
+
+
+
+
+// CSV TO JSON
+
+function csvToJson(csv){
+
+
+let lines =
+csv.split("\n");
+
+
+let headers =
+lines[0]
+.split(",")
+.map(h=>h.trim());
+
+
+return lines.slice(1)
+.map(row=>{
+
+
+let values =
+row.split(",");
+
+
+let obj={};
+
+
+headers.forEach((head,index)=>{
+
+obj[head]=values[index] || "";
+
+});
+
+
+return obj;
+
+
+});
+
+
+}
+
+
+
+
+
+// MERGE BOTH SHEETS USING RIDER ID
+
+function mergeRiders(master,performance){
+
+
+
+let table =
+document.getElementById("riderTable");
+
+
+table.innerHTML="";
+
+
+
+let high=0;
+let medium=0;
+let low=0;
+let veryLow=0;
+
+let working=0;
+let late=0;
+let noShow=0;
+let totalOrders=0;
+
+
+
+master.forEach(rider=>{
+
+
+let perf =
+performance.find(
+p=>p["Rider Id"] == rider["Rider Id"]
+);
+
+
+
+if(!perf) return;
+
+
+
+let orders =
+Number(perf["Completed Deliveries"]) || 0;
+
+
+
+let status =
+getPerformance(orders);
+
+
+
+
+
+if(status=="High")
+high++;
+
+else if(status=="Medium")
+medium++;
+
+else if(status=="Low")
+low++;
+
+else
+veryLow++;
+
+
+
+
+
+if(rider["working Status"]=="Working")
+working++;
+
+
+
+
+if(Number(perf["Late Login %"])>0)
+late++;
+
+
+
+
+if(Number(perf["no_show_shifts"])>0)
+noShow++;
+
+
+
+
+totalOrders += orders;
+
+
+
+
+
+table.innerHTML += `
+
+<tr class="border-b hover:bg-gray-50">
+
+
+<td class="p-3">
+${rider["Name"]}
+</td>
+
+
+<td class="p-3">
+${rider["Rider Id"]}
+</td>
+
+
+<td class="p-3">
+${rider["Bike Number"]}
+</td>
+
+
+<td class="p-3">
+${rider["Company Number"]}
+</td>
+
+
+<td class="p-3">
+${rider["ITC"]}
+</td>
+
+
+<td class="p-3">
+${rider["Passport"]}
+</td>
+
+
+<td class="p-3">
+${rider["working Status"]}
+</td>
+
+
+<td class="p-3">
+${perf["Late Login %"]}
+</td>
+
+
+<td class="p-3">
+${perf["Early Logout %"]}
+</td>
+
+
+<td class="p-3">
+${perf["No Show %"]}
+</td>
+
+
+<td class="p-3 font-bold">
+${orders}
+</td>
+
+
+<td class="p-3 font-bold">
+${status}
+</td>
+
+
+<td class="p-3">
+${rider["Remarks"]}
+</td>
+
+
+</tr>
+
+`;
+
+
+
+});
+
+
+
+
+
+// UPDATE CARDS
+
+
+document.getElementById("total").innerText =
+master.length;
+
+
+document.getElementById("high").innerText =
+high;
+
+
+document.getElementById("medium").innerText =
+medium;
+
+
+document.getElementById("low").innerText =
+low;
+
+
+document.getElementById("veryLow").innerText =
+veryLow;
+
+
+document.getElementById("working").innerText =
+working;
+
+
+document.getElementById("late").innerText =
+late;
+
+
+document.getElementById("noshow").innerText =
+noShow;
+
+
+document.getElementById("orders").innerText =
+totalOrders;
+
+
+
+}
+
+
+
+
+
+// PERFORMANCE RULES
+
+function getPerformance(order){
+
+
+if(order >= 400){
+
+return "🟢 High";
+
+}
+
+
+else if(order >=350){
+
+return "🔵 Medium";
+
+}
+
+
+else if(order >=300){
+
+return "🟡 Low";
+
+}
+
+
+else{
+
+return "🔴 Very Low";
+
+}
+
+
+}
+
+
+
+
+// START APP
+
+loadGoogleSheets();
+
+
+</script>
+
+
+
+</body>
+</html>
